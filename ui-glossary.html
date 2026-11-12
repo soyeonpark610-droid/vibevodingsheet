@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UI 용어 사전 — 호버로 보는 24가지</title>
+<style>
+:root{--bg:#f3f4fb;--ink:#14172b;--sub:#6a7090;--line:#e1e4f2;--card:#fff;--ac:#7c8bff;--ac2:#5b6cff;--warn:#ffd36b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Pretendard','Apple SD Gothic Neo','맑은 고딕',-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+header.top{background:linear-gradient(135deg,#12142a,#26204d);color:#fff;padding:56px 0 44px}
+.eyebrow{font-size:12px;letter-spacing:2px;color:#a9b2ff;font-weight:700}
+h1{font-size:clamp(28px,5vw,44px);letter-spacing:-1px;margin:10px 0 12px;font-weight:800}
+.lead{color:#c9cdf0;max-width:640px;font-size:16px}
+.formula{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-weight:700}
+.formula span{padding:10px 16px;border-radius:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)}
+.formula b{color:#a9b2ff;font-size:20px}
+.tools{position:sticky;top:0;z-index:20;background:rgba(243,244,251,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tools .wrap{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:12px 20px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:99px;padding:7px 15px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--ink);transition:.2s}
+.chip:hover{border-color:var(--ac)}
+.chip.act{background:var(--ink);color:#fff;border-color:var(--ink)}
+.sp-fill{flex:1}
+.hint{font-size:13px;color:var(--sub)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;padding:28px 0 20px}
+.card{background:var(--card);border-radius:16px;border:1px solid var(--line);overflow:hidden;transition:transform .25s,box-shadow .25s;outline:none}
+.card:hover,.card.on{transform:translateY(-3px);box-shadow:0 14px 34px rgba(60,70,150,.16)}
+.card:focus-visible{box-shadow:0 0 0 3px var(--ac)}
+.body{padding:14px 16px 16px}
+.meta{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--sub);font-weight:700}
+.no{background:var(--ink);color:#fff;border-radius:6px;padding:1px 7px}
+.tag{padding:1px 8px;border-radius:6px;background:#eceeff;color:var(--ac2)}
+.tag.c2{background:#e5f7ee;color:#1d8a56}.tag.c3{background:#fff1dc;color:#b66a00}
+.name{font-size:20px;font-weight:800;margin-top:6px;letter-spacing:-.4px}
+.name small{font-size:12.5px;color:var(--sub);font-weight:600;margin-left:6px;letter-spacing:0}
+.when{font-size:13.5px;color:#454b6e;margin-top:3px}
+.prompt{margin-top:12px;background:#f6f7ff;border:1px dashed #c9cff5;border-radius:10px;padding:9px 10px;font-size:12.5px;color:#39407a;display:flex;gap:8px;align-items:flex-start}
+.prompt q{flex:1;quotes:none}
+.prompt button{border:none;background:var(--ac2);color:#fff;border-radius:6px;padding:3px 9px;font:inherit;font-size:11.5px;font-weight:700;cursor:pointer;flex-shrink:0}
+.prompt button.ok{background:#1d8a56}
+.sec{margin:36px 0 14px;font-size:22px;font-weight:800;letter-spacing:-.5px}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:40px}
+.cmp>div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 20px;font-size:14.5px}
+.cmp h3{font-size:13px;margin-bottom:8px}
+.cmp .bad h3{color:#c0432b}.cmp .good h3{color:#1d8a56}
+.cmp mark{background:#e7eaff;color:#2c36a6;border-radius:4px;padding:0 3px;font-weight:700}
+footer{padding:26px 0 50px;color:var(--sub);font-size:13px;text-align:center}
+footer a{color:var(--ac2)}
+@media(max-width:700px){.cmp{grid-template-columns:1fr}}
+
+/* ===== 데모 공통 ===== */
+.stage{height:184px;position:relative;background:radial-gradient(circle at 25% 0,#1b2040,#0c0e1a);overflow:hidden;cursor:pointer}
+.stage::after{content:"▶ 마우스를 올려 보세요";position:absolute;right:10px;bottom:7px;font-size:10.5px;color:#8f97cf;opacity:.9;transition:.2s;pointer-events:none;z-index:9}
+.card.on .stage::after,.all .stage::after{opacity:0}
+.mini{position:absolute;inset:14px;border-radius:10px;background:#161a2d;border:1px solid #2b3150;overflow:hidden;--nd:0s}
+.mini *,.mini *::before,.mini *::after{animation-play-state:paused;animation-delay:calc(var(--nd) + var(--d,0s)) !important;animation-iteration-count:infinite !important;animation-fill-mode:both !important}
+.card.on .mini *,.card.on .mini *::before,.card.on .mini *::after,.all .mini *,.all .mini *::before,.all .mini *::after{animation-play-state:running}
+.b{height:6px;border-radius:3px;background:#3b4270}
+.b.w{background:#e9ecff}.b.a{background:var(--ac)}
+.lab{position:absolute;font-size:9.5px;padding:2px 7px;border-radius:5px;background:var(--warn);color:#2b2200;font-weight:800;white-space:nowrap;z-index:8}
+.cur{position:absolute;width:13px;height:17px;background:#fff;clip-path:polygon(0 0,0 100%,30% 76%,50% 100%,65% 92%,45% 68%,85% 68%);z-index:9;filter:drop-shadow(0 1px 2px #000)}
+.ctr{display:flex;align-items:center;justify-content:center}
+
+/* 1 hero */
+.hero .nav{position:absolute;top:10px;left:12px;right:12px;display:flex;gap:6px;align-items:center}
+.hero .nav i{width:24px;height:5px;border-radius:3px;background:#3b4270}
+.hero .nav i:first-child{width:12px;height:12px;border-radius:4px;background:var(--ac)}
+.hero .tx{position:absolute;left:14px;top:36px;width:56%}
+.hero .h{height:11px;border-radius:3px;background:#eef0ff;margin-bottom:6px;animation:rise 4s ease}
+.hero .h2{width:72%;--d:.15s}.hero .p{height:5px;width:90%;margin-top:9px;background:#3b4270;animation:rise 4s ease;--d:.3s}
+.hero .p2{width:60%;margin-top:5px;--d:.4s}
+.hero .cta{display:inline-block;margin-top:11px;padding:6px 12px;border-radius:99px;background:var(--ac);color:#fff;font-size:10px;font-weight:800;animation:pulse 2s infinite}
+.hero .img{position:absolute;right:14px;top:36px;width:34%;height:84px;border-radius:10px;background:linear-gradient(135deg,#7c8bff,#ff7ac6);animation:floaty 4s ease-in-out}
+@keyframes rise{0%{opacity:0;transform:translateY(10px)}15%,85%{opacity:1;transform:none}100%{opacity:0;transform:translateY(10px)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(124,139,255,.8)}60%{box-shadow:0 0 0 9px rgba(124,139,255,0);transform:scale(1.07)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+/* 2 반응형 */
+.rsp{padding:10px}
+.rsp .rf{container-type:inline-size;width:100%;margin:auto;border:1px dashed var(--ac);border-radius:8px;padding:6px;animation:rw 5s ease-in-out}
+.rsp .g{display:grid;gap:5px;grid-template-columns:1fr}
+.rsp .g i{height:22px;border-radius:5px;background:linear-gradient(135deg,#4a55b0,#7c8bff)}
+.rsp .t::after{content:"모바일 · 1열";font-size:9.5px;font-weight:800;color:var(--warn)}
+.rsp .t{margin-bottom:5px}
+@container (min-width:110px){.rsp .g{grid-template-columns:1fr 1fr}.rsp .t::after{content:"태블릿 · 2열"}}
+@container (min-width:190px){.rsp .g{grid-template-columns:1fr 1fr 1fr}.rsp .t::after{content:"데스크톱 · 3열"}}
+@keyframes rw{0%,15%{width:100%}40%,55%{width:56%}80%,92%{width:30%}100%{width:100%}}
+/* 3 카드 */
+.cdl{display:flex;flex-direction:column;justify-content:center;padding:14px 16px}
+.cdl .bx{display:flex;gap:8px;align-items:center;border:1px solid transparent;border-radius:8px;padding:2px 0;margin:3px 0;animation:boxify 4s ease-in-out}
+.cdl .bx:nth-child(2){--d:.15s}.cdl .bx:nth-child(3){--d:.3s}
+.cdl .ic{width:22px;height:22px;border-radius:6px;background:var(--ac);flex-shrink:0}
+.cdl .bx>div:last-child{flex:1}
+@keyframes boxify{0%,12%{background:transparent;border-color:transparent;padding:2px 0;box-shadow:none}30%,82%{background:#222845;border-color:#3b4270;padding:9px 10px;box-shadow:0 6px 14px rgba(0,0,0,.35)}100%{background:transparent;border-color:transparent;padding:2px 0}}
+/* 4 벤토 */
+.bento{padding:10px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);gap:6px}
+.bento i{border-radius:8px;background:#2a3060;animation:pop 4s ease-in-out}
+.bento i:nth-child(1){grid-column:1/3;grid-row:1/3;background:linear-gradient(135deg,#7c8bff,#c07cff)}
+.bento i:nth-child(2){grid-column:3/5;background:#34407f;--d:.15s}
+.bento i:nth-child(3){--d:.3s}.bento i:nth-child(4){background:#3f4a94;--d:.45s}
+.bento i:nth-child(5){grid-column:1/3;background:#2f3873;--d:.6s}.bento i:nth-child(6){grid-column:3/5;background:#4a55b0;--d:.75s}
+@keyframes pop{0%{opacity:0;transform:scale(.6)}10%,86%{opacity:1;transform:none}96%,100%{opacity:0;transform:scale(.6)}}
+/* 5 사이드바 */
+.sbx{display:grid;grid-template-columns:30% 1fr}
+.sbx .sd{background:#101327;padding:8px 6px;border-right:1px solid #2b3150}
+.sbx .sd div{height:16px;border-radius:5px;margin-bottom:5px;background:#1d2240;animation:act 4s}
+.sbx .mn{position:relative;padding:10px}
+.sbx .pn{position:absolute;inset:10px;opacity:0;animation:pane 4s}
+.sbx .pn i{display:block;height:34px;border-radius:7px;margin-bottom:7px}
+.sbx .pn:nth-child(1) i{background:#3b4a9a}.sbx .pn:nth-child(2) i{background:#7c4d9a}.sbx .pn:nth-child(3) i{background:#2f8a78}.sbx .pn:nth-child(4) i{background:#9a6a3b}
+@keyframes act{0%{background:#1d2240}3%,22%{background:var(--ac);box-shadow:inset 3px 0 0 #fff}25%,100%{background:#1d2240}}
+@keyframes pane{0%{opacity:0;transform:translateX(8px)}4%,22%{opacity:1;transform:none}26%,100%{opacity:0}}
+/* 6 sticky */
+.stk .hd{position:absolute;top:0;left:0;right:0;height:24px;background:var(--ac2);z-index:3;display:flex;align-items:center;gap:6px;padding:0 10px;box-shadow:0 4px 10px rgba(0,0,0,.4)}
+.stk .hd i{width:26px;height:5px;border-radius:3px;background:#fff;opacity:.85}
+.stk .bd{position:absolute;top:24px;left:0;right:0;padding:8px;animation:scrolly 4s ease-in-out alternate}
+.stk .bd div{height:34px;border-radius:7px;margin-bottom:8px;background:#272d55}
+.stk .bd div:nth-child(2n){background:#3b4a9a}
+@keyframes scrolly{0%{transform:translateY(0)}100%{transform:translateY(-110px)}}
+/* 7 스플릿 */
+.spl{padding:10px;display:flex;align-items:center}
+.spl .sf{container-type:inline-size;width:100%;margin:auto;border:1px dashed var(--ac);border-radius:8px;padding:6px;animation:rw 5s ease-in-out}
+.spl .cells{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.spl .im{height:56px;border-radius:7px;background:linear-gradient(135deg,#7c8bff,#ff7ac6)}
+.spl .tx{display:flex;flex-direction:column;gap:6px;justify-content:center}
+@container (max-width:150px){.spl .cells{grid-template-columns:1fr}.spl .im{height:40px}}
+/* 8 탭 */
+.tabs .row{display:flex;border-bottom:1px solid #2b3150;position:relative}
+.tabs .row span{flex:1;text-align:center;font-size:11px;padding:8px 0;color:#7f87b9;font-weight:700;animation:tcol 4s}
+.tabs .row span:nth-child(2){--d:1.33s}.tabs .row span:nth-child(3){--d:2.66s}
+.tabs .ind{position:absolute;left:0;bottom:-1px;width:33.33%;height:3px;background:var(--ac);border-radius:2px;animation:ind 4s ease-in-out}
+.tabs .pn{position:absolute;left:12px;right:12px;top:48px;opacity:0;animation:pane 4s;animation-duration:4s}
+.tabs .pn i{display:block;height:7px;border-radius:3px;background:#3b4270;margin-bottom:7px}
+.tabs .pn:nth-of-type(1){animation-name:pane3;--d:0s}.tabs .pn:nth-of-type(2){animation-name:pane3;--d:1.33s}.tabs .pn:nth-of-type(3){animation-name:pane3;--d:2.66s}
+.tabs .box{height:46px;border-radius:8px;margin-bottom:7px;background:#2c3470}
+@keyframes tcol{0%{color:#7f87b9}4%,28%{color:#fff}33%,100%{color:#7f87b9}}
+@keyframes ind{0%,28%{transform:translateX(0)}33%,61%{transform:translateX(100%)}66%,95%{transform:translateX(200%)}100%{transform:translateX(0)}}
+@keyframes pane3{0%{opacity:0;transform:translateY(6px)}4%,28%{opacity:1;transform:none}33%,100%{opacity:0}}
+/* 9 아코디언 */
+.acc{padding:10px 12px}
+.acc .it{border:1px solid #2b3150;border-radius:7px;margin-bottom:6px;overflow:hidden;background:#1c2140}
+.acc .q{display:flex;justify-content:space-between;align-items:center;padding:7px 9px;font-size:10.5px;font-weight:700;color:#dfe3ff}
+.acc .q em{font-style:normal;color:var(--ac);display:inline-block;animation:arr 4s}
+.acc .an{max-height:0;overflow:hidden;animation:mh 4s}
+.acc .an i{display:block;height:5px;margin:0 9px 6px;border-radius:3px;background:#3b4270}
+.acc .it:nth-child(2) .q em,.acc .it:nth-child(2) .an{--d:1.33s}.acc .it:nth-child(3) .q em,.acc .it:nth-child(3) .an{--d:2.66s}
+@keyframes mh{0%{max-height:0}5%,28%{max-height:44px}33%,100%{max-height:0}}
+@keyframes arr{0%{transform:rotate(0)}5%,28%{transform:rotate(90deg)}33%,100%{transform:rotate(0)}}
+/* 10 모달 */
+.mdl .pg{padding:12px;display:flex;flex-direction:column;gap:8px}
+.mdl .ov{position:absolute;inset:0;background:#000;animation:ovl 4s}
+.mdl .dlg{position:absolute;left:50%;top:50%;width:62%;margin:-38px 0 0 -31%;background:#fff;border-radius:10px;padding:10px;animation:dlg 4s;text-align:center;z-index:2}
+.mdl .dlg b{display:block;font-size:11px;color:#14172b}.mdl .dlg small{font-size:9px;color:#6a7090}
+.mdl .dlg div{display:flex;gap:6px;margin-top:8px}.mdl .dlg span{flex:1;border-radius:5px;padding:4px 0;font-size:9.5px;font-weight:800;background:#eceeff;color:#39407a}.mdl .dlg span:last-child{background:#e5484d;color:#fff}
+@keyframes ovl{0%,12%{opacity:0}22%,72%{opacity:.68}82%,100%{opacity:0}}
+@keyframes dlg{0%,14%{opacity:0;transform:scale(.8)}26%,70%{opacity:1;transform:scale(1)}80%,100%{opacity:0;transform:scale(.8)}}
+/* 11 드로어 */
+.drw .pg{padding:12px;display:flex;flex-direction:column;gap:8px}
+.drw .ov{position:absolute;inset:0;background:#000;animation:ovl 4s}
+.drw .pn{position:absolute;top:0;right:0;bottom:0;width:46%;background:#fff;padding:10px;animation:slide 4s;z-index:2;box-shadow:-8px 0 20px rgba(0,0,0,.4)}
+.drw .pn b{font-size:10.5px;color:#14172b;display:block;margin-bottom:8px}
+.drw .pn .tg{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.drw .pn .tg i{width:46%;height:5px;border-radius:3px;background:#d5d9ee}.drw .pn .tg u{width:22px;height:11px;border-radius:7px;background:var(--ac2);position:relative}
+.drw .pn .tg u::after{content:"";position:absolute;right:2px;top:2px;width:7px;height:7px;border-radius:50%;background:#fff}
+@keyframes slide{0%,14%{transform:translateX(105%)}28%,70%{transform:translateX(0)}82%,100%{transform:translateX(105%)}}
+/* 12 드롭다운 */
+.dd .bt{position:absolute;left:16px;top:16px;padding:6px 12px;border-radius:7px;background:#2c3470;color:#fff;font-size:10.5px;font-weight:800;animation:press 4s}
+.dd .mn{position:absolute;left:16px;top:50px;width:120px;background:#fff;border-radius:8px;padding:4px;transform-origin:top;animation:menu 4s;box-shadow:0 10px 24px rgba(0,0,0,.5)}
+.dd .mn div{font-size:10.5px;color:#14172b;padding:5px 8px;border-radius:5px;font-weight:600}
+.dd .hl{position:absolute;left:4px;right:4px;top:4px;height:25px;border-radius:5px;background:#e6e9ff;animation:hlmove 4s steps(1)}
+.dd .mn div{position:relative}
+@keyframes menu{0%,10%{transform:scaleY(0);opacity:0}18%,76%{transform:scaleY(1);opacity:1}86%,100%{transform:scaleY(0);opacity:0}}
+@keyframes press{0%,6%{transform:scale(1)}9%{transform:scale(.92)}12%,100%{transform:scale(1)}}
+@keyframes hlmove{0%,35%{transform:translateY(0)}35.1%,50%{transform:translateY(25px)}50.1%,100%{transform:translateY(50px)}}
+/* 13 툴팁 */
+.tip .row{position:absolute;left:18px;top:60px;display:flex;align-items:center;gap:8px;font-size:11px;color:#c9cdf0;font-weight:700}
+.tip .q{width:20px;height:20px;border-radius:50%;background:#2c3470;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;animation:qhi 4s}
+.tip .tp{position:absolute;left:40px;top:28px;background:#fff;color:#14172b;border-radius:7px;padding:5px 9px;font-size:10px;font-weight:700;animation:tp 4s;white-space:nowrap}
+.tip .tp::after{content:"";position:absolute;left:12px;bottom:-5px;border:5px solid transparent;border-top-color:#fff;border-bottom:0}
+.tip .cur{animation:curTip 4s ease-in-out}
+@keyframes curTip{0%,5%{left:200px;top:140px}22%,74%{left:34px;top:76px}92%,100%{left:200px;top:140px}}
+@keyframes tp{0%,22%{opacity:0;transform:translateY(5px)}30%,72%{opacity:1;transform:none}80%,100%{opacity:0}}
+@keyframes qhi{0%,22%{background:#2c3470}28%,72%{background:var(--ac2)}80%,100%{background:#2c3470}}
+/* 14 토스트 */
+.tst .bt{position:absolute;left:50%;top:44px;margin-left:-28px;padding:7px 18px;border-radius:8px;background:var(--ac2);color:#fff;font-size:11px;font-weight:800;animation:press2 4s}
+.tst .ts{position:absolute;left:50%;bottom:14px;margin-left:-70px;width:140px;text-align:center;background:#fff;color:#14172b;border-radius:99px;padding:7px 0;font-size:10.5px;font-weight:800;box-shadow:0 8px 20px rgba(0,0,0,.5);animation:toast 4s}
+.tst .ts em{color:#1d8a56;font-style:normal}
+@keyframes press2{0%,12%{transform:scale(1)}15%{transform:scale(.9)}19%,100%{transform:scale(1)}}
+@keyframes toast{0%,18%{transform:translateY(46px);opacity:0}28%,72%{transform:translateY(0);opacity:1}86%,100%{transform:translateY(0);opacity:0}}
+/* 15 캐러셀 */
+.car .vp{position:absolute;inset:10px 10px 28px;border-radius:8px;overflow:hidden}
+.car .tk{display:flex;width:300%;height:100%;animation:slides 6s}
+.car .tk i{flex:1;margin-right:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;font-style:normal}
+.car .tk i:nth-child(1){background:linear-gradient(135deg,#7c8bff,#5b6cff)}.car .tk i:nth-child(2){background:linear-gradient(135deg,#ff7ac6,#c07cff)}.car .tk i:nth-child(3){background:linear-gradient(135deg,#2fc7a0,#2f8a78)}
+.car .dt{position:absolute;bottom:9px;left:0;right:0;display:flex;gap:6px;justify-content:center}
+.car .dt i{width:7px;height:7px;border-radius:50%;background:#3b4270;animation:dot 6s}
+.car .dt i:nth-child(2){--d:2s}.car .dt i:nth-child(3){--d:4s}
+.car .ar{position:absolute;top:50%;margin-top:-13px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.85);color:#14172b;font-size:13px;display:flex;align-items:center;justify-content:center;z-index:3;font-weight:800}
+@keyframes slides{0%,25%{transform:translateX(0)}33%,58%{transform:translateX(-33.333%)}66%,91%{transform:translateX(-66.666%)}100%{transform:translateX(0)}}
+@keyframes dot{0%{background:#3b4270;transform:scale(1)}1%,32%{background:var(--ac);transform:scale(1.3)}34%,100%{background:#3b4270;transform:scale(1)}}
+/* 16 스켈레톤 */
+.skl .a{position:absolute;inset:0;padding:14px;animation:swapA 4s}.skl .r{position:absolute;inset:0;padding:14px;animation:swapB 4s}
+.skl .row{display:flex;gap:10px}
+.skl .av{width:46px;height:46px;border-radius:10px;flex-shrink:0}
+.skl .sh{background:linear-gradient(90deg,#252b4e 25%,#3a4272 50%,#252b4e 75%);background-size:200% 100%;animation:shim 1.2s linear}
+.skl .ln{height:8px;border-radius:4px;margin-bottom:8px}
+.skl .real .av{background:linear-gradient(135deg,#7c8bff,#ff7ac6)}
+.skl .real .ln{background:#e6e9ff}.skl .real .ln.s{background:#4a528a}
+@keyframes shim{0%{background-position:200% 0}100%{background-position:-200% 0}}
+@keyframes swapA{0%,46%{opacity:1}52%,94%{opacity:0}100%{opacity:1}}
+@keyframes swapB{0%,46%{opacity:0}52%,94%{opacity:1}100%{opacity:0}}
+/* 17 호버 이펙트 */
+.hov .cd{position:absolute;left:50%;top:50%;width:110px;height:84px;margin:-40px 0 0 -55px;border-radius:12px;background:#222845;border:1px solid #3b4270;padding:10px;animation:lift 4s ease-in-out}
+.hov .cd .ic{width:20px;height:20px;border-radius:6px;background:var(--ac);margin-bottom:8px}
+.hov .cur{animation:curHov 4s ease-in-out}
+@keyframes lift{0%,22%{transform:translateY(0);box-shadow:0 2px 4px rgba(0,0,0,.4);background:#222845}32%,68%{transform:translateY(-9px);box-shadow:0 18px 26px rgba(0,0,0,.6),0 0 0 1px var(--ac);background:#2c3470}78%,100%{transform:translateY(0);box-shadow:0 2px 4px rgba(0,0,0,.4);background:#222845}}
+@keyframes curHov{0%,5%{left:230px;top:150px}25%,72%{left:150px;top:90px}95%,100%{left:230px;top:150px}}
+/* 18 스크롤 리빌 / 19 스태거 */
+.rev .sec{height:34px;border-radius:8px;margin-bottom:8px;animation:rev 4s ease-out}
+.rev .sec:nth-child(1){background:#3b4a9a}.rev .sec:nth-child(2){background:#7c4d9a;--d:.5s}.rev .sec:nth-child(3){background:#2f8a78;--d:1s}
+.rev .pad{padding:12px 24px 0 12px}
+.rev .sb{position:absolute;right:5px;top:6px;bottom:6px;width:4px;border-radius:3px;background:#222845}
+.rev .sb i{position:absolute;left:0;right:0;top:0;height:30%;border-radius:3px;background:var(--ac);animation:thumb 4s ease-in-out}
+@keyframes rev{0%{opacity:0;transform:translateY(22px)}10%,80%{opacity:1;transform:none}95%,100%{opacity:0;transform:translateY(22px)}}
+@keyframes thumb{0%{transform:translateY(0)}60%,100%{transform:translateY(150%)}}
+.stg{padding:14px;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.stg i{border-radius:9px;height:44px;animation:rev 3.5s ease-out}
+.stg i:nth-child(1){background:#3b4a9a}.stg i:nth-child(2){background:#7c4d9a;--d:.3s}.stg i:nth-child(3){background:#2f8a78;--d:.6s}.stg i:nth-child(4){background:#9a6a3b;--d:.9s}
+/* 20 트랜지션 */
+.trn{display:flex;gap:10px;padding:14px}
+.trn .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font-size:10px;color:#aab1e6;font-weight:700;text-align:center}
+.trn .col i{width:44px;height:44px;border-radius:10px;background:#3b4270;display:block}
+.trn .a i{animation:jump 3s steps(1)}.trn .b2 i{animation:smooth 3s ease-in-out}
+@keyframes jump{0%{background:#3b4270;border-radius:10px;transform:scale(1)}50%{background:var(--ac);border-radius:50%;transform:scale(1.25)}}
+@keyframes smooth{0%,45%{background:#3b4270;border-radius:10px;transform:scale(1)}58%,95%{background:var(--ac);border-radius:50%;transform:scale(1.25)}100%{background:#3b4270;border-radius:10px;transform:scale(1)}}
+/* 21 글래스모피즘 */
+.gls{background:#0b0d1a}
+.gls .bl{position:absolute;border-radius:50%;filter:blur(2px)}
+.gls .bl1{width:80px;height:80px;background:#ff5fa8;left:20px;top:10px;animation:b1 4s ease-in-out}
+.gls .bl2{width:70px;height:70px;background:#5b6cff;right:20px;bottom:6px;animation:b2 4s ease-in-out}
+.gls .bl3{width:50px;height:50px;background:#2fe0b0;right:80px;top:6px;animation:b1 3s ease-in-out}
+.gls .gc{position:absolute;left:50%;top:50%;width:62%;height:70px;margin:-35px 0 0 -31%;border-radius:12px;background:rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.35);padding:10px;z-index:2;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.gls .gc b{display:block;font-size:11px;color:#fff;margin-bottom:6px}
+@keyframes b1{0%,100%{transform:translate(0,0)}50%{transform:translate(80px,30px)}}
+@keyframes b2{0%,100%{transform:translate(0,0)}50%{transform:translate(-90px,-26px)}}
+/* 22 패럴랙스 */
+.par{background:linear-gradient(#1f2760,#4a3b8a 70%,#7a4b8a)}
+.par .l{position:absolute;left:-10%;right:-10%}
+.par .sun{width:34px;height:34px;border-radius:50%;background:#ffd36b;left:68%;top:24px;right:auto;animation:p1 3s ease-in-out alternate}
+.par .m1{bottom:-34px;height:100px;background:#2c2a6b;border-radius:50% 50% 0 0;animation:p2 3s ease-in-out alternate}
+.par .m2{bottom:-46px;height:90px;background:#1c1b4a;border-radius:60% 40% 0 0;animation:p3 3s ease-in-out alternate}
+.par .m3{bottom:-60px;height:80px;background:#0f0f2e;border-radius:40% 60% 0 0;animation:p4 3s ease-in-out alternate}
+@keyframes p1{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+@keyframes p2{from{transform:translateY(0)}to{transform:translateY(-14px)}}
+@keyframes p3{from{transform:translateY(0)}to{transform:translateY(-30px)}}
+@keyframes p4{from{transform:translateY(0)}to{transform:translateY(-52px)}}
+/* 23 스크롤 스냅 */
+.snp .tk{position:absolute;left:0;right:0;top:0;height:300%;animation:snap 6s}
+.snp .tk div{height:33.333%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff}
+.snp .tk div:nth-child(1){background:linear-gradient(135deg,#5b6cff,#7c8bff)}.snp .tk div:nth-child(2){background:linear-gradient(135deg,#c07cff,#ff7ac6)}.snp .tk div:nth-child(3){background:linear-gradient(135deg,#2f8a78,#2fe0b0)}
+.snp .dt{position:absolute;right:7px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:5px;z-index:3}
+.snp .dt i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);animation:sdot 6s}
+.snp .dt i:nth-child(2){--d:2s}.snp .dt i:nth-child(3){--d:4s}
+@keyframes snap{0%,22%{transform:translateY(0)}30%,55%{transform:translateY(-33.333%)}63%,88%{transform:translateY(-66.666%)}100%{transform:translateY(0)}}
+@keyframes sdot{0%{background:rgba(255,255,255,.4)}1%,30%{background:#fff}33%,100%{background:rgba(255,255,255,.4)}}
+/* 24 마이크로 인터랙션 */
+.mic .bt{position:absolute;left:30%;top:50%;width:96px;height:36px;margin:-18px 0 0 -48px;border-radius:99px;background:var(--ac2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:800;animation:btcol 3.6s}
+.mic .bt span{position:absolute}
+.mic .s1{animation:s1 3.6s}.mic .s2{width:16px;height:16px;border:3px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:s2 3.6s}.mic .s3{animation:s3 3.6s;font-size:16px}
+.mic .hrt{position:absolute;left:70%;top:50%;margin:-14px 0 0 -14px;font-size:24px;color:#4a528a;animation:heart 3.6s}
+@keyframes s1{0%,22%{opacity:1}26%,100%{opacity:0}}
+@keyframes s2{0%,24%{opacity:0;transform:rotate(0)}28%,52%{opacity:1;transform:rotate(540deg)}56%,100%{opacity:0;transform:rotate(720deg)}}
+@keyframes s3{0%,56%{opacity:0;transform:scale(.3)}64%{transform:scale(1.4)}70%,92%{opacity:1;transform:scale(1)}98%,100%{opacity:0}}
+@keyframes btcol{0%,56%{background:var(--ac2)}60%,92%{background:#1d9d63}98%,100%{background:var(--ac2)}}
+@keyframes heart{0%,58%{color:#4a528a;transform:scale(1)}66%{color:#ff4d6d;transform:scale(1.6)}74%,92%{color:#ff4d6d;transform:scale(1)}100%{color:#4a528a}}
+@media (prefers-reduced-motion:reduce){.mini *{animation-duration:12s !important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="eyebrow">에이플러스에셋 PBL</div>
+  <h1>UI 용어 사전 — 호버로 보는 24가지</h1>
+  <p class="lead">"뭐라고 불러야 하지?" 싶을 때 찾아보는 UI 용어집입니다. 카드에 <b>마우스를 올리면</b> 해당 UI가 어떻게 움직이는지 바로 보여 줍니다. (모바일은 카드를 탭)</p>
+  <div class="formula"><span>UI 용어</span><b>+</b><span>원하는 동작</span><b>+</b><span>적용 조건</span><b>=</b><span style="background:#5b6cff;border-color:#5b6cff">정확한 AI 요청</span></div>
+</div></header>
+
+<div class="tools"><div class="wrap">
+  <button class="chip act" data-f="all">전체 24</button>
+  <button class="chip" data-f="1">① 레이아웃 7</button>
+  <button class="chip" data-f="2">② 컴포넌트 9</button>
+  <button class="chip" data-f="3">③ 효과·모션 8</button>
+  <span class="sp-fill"></span>
+  <span class="hint" id="hint">호버하면 재생</span>
+  <button class="chip" id="playall">▶ 전체 재생</button>
+</div></div>
+
+<main class="wrap">
+  <div class="grid" id="grid"></div>
+
+  <h2 class="sec">요청이 이렇게 달라집니다</h2>
+  <div class="cmp">
+    <div class="bad"><h3>✕ 흔한 요청</h3>세련된 웹사이트 만들어 줘. 카드도 예쁘게 하고 스크롤 효과도 넣고 설정 화면도 좀 멋지게 나오게 해 줘.</div>
+    <div class="good"><h3>○ 용어로 말하기</h3>첫 화면은 <mark>히어로 섹션</mark>, 핵심 기능은 <mark>벤토 그리드</mark>, 상단은 <mark>스티키 헤더</mark>, 설정은 <mark>오른쪽 드로어</mark>로. 카드에는 가벼운 <mark>호버</mark>와 <mark>스크롤 리빌</mark>, 0.1초 간격의 <mark>스태거 애니메이션</mark>을 넣어 줘.</div>
+  </div>
+</main>
+<footer><div class="wrap">영상 「바이브코더가 반드시 알아야 할 필수 용어 24가지」(코드깎는노인) 내용을 바탕으로 한 교육용 정리 · <a href="https://www.youtube.com/watch?v=mlhKEy-2bgI" target="_blank" rel="noopener">원본 영상 ↗</a></div></footer>
+
+<script>
+const D=[
+// ---- 레이아웃 ----
+{c:1,n:'히어로 섹션',en:'Hero Section',w:'웹사이트 첫 화면의 메인 소개 영역. 서비스가 뭔지 첫눈에 알립니다. 방문자가 눌러 주길 바라는 핵심 버튼이 CTA입니다.',p:'첫 화면에 짧고 강한 제목과 설명, CTA 버튼, 제품 이미지를 넣은 히어로 섹션을 만들어 줘.',
+ d:`<div class="mini hero" style="--nd:-1.4s"><div class="nav"><i></i><i></i><i></i><i></i></div><div class="tx"><div class="h"></div><div class="h h2"></div><div class="p"></div><div class="p p2"></div><span class="cta">무료로 시작하기</span></div><div class="img"></div><span class="lab" style="left:92px;top:128px">CTA 버튼</span><span class="lab" style="right:14px;top:124px">히어로 섹션</span></div>`},
+{c:1,n:'반응형 레이아웃',en:'Responsive Layout',w:'화면 폭에 따라 배치가 바뀌는 구조. PC에서만 예쁘고 모바일에서 깨지는 문제를 막습니다. 열 수를 같이 정해 주세요.',p:'반응형 레이아웃으로 데스크톱은 3열, 태블릿은 2열, 모바일은 1열로 카드가 재배치되게 해 줘.',
+ d:`<div class="mini rsp ctr" style="--nd:-.2s"><div class="rf"><div class="t"></div><div class="g"><i></i><i></i><i></i><i></i></div></div></div>`},
+{c:1,n:'카드 레이아웃',en:'Card Layout',w:'흩어진 정보를 독립된 박스로 나누는 방식. 상품 목록, 블로그 글, 기능 소개처럼 반복되는 정보에 씁니다.',p:'서비스 기능을 카드 레이아웃으로 정리하고 각 카드에는 아이콘과 제목, 짧은 설명을 넣어 줘.',
+ d:`<div class="mini cdl" style="--nd:-2s"><div class="bx"><div class="ic"></div><div><div class="b w" style="width:60%;margin-bottom:5px"></div><div class="b"></div></div></div><div class="bx"><div class="ic" style="background:#ff7ac6"></div><div><div class="b w" style="width:50%;margin-bottom:5px"></div><div class="b"></div></div></div><div class="bx"><div class="ic" style="background:#2fc7a0"></div><div><div class="b w" style="width:68%;margin-bottom:5px"></div><div class="b"></div></div></div></div>`},
+{c:1,n:'벤토 그리드',en:'Bento Grid',w:'크기가 제각각인 카드 배치. 중요한 항목은 크게, 보조 항목은 작게. 일본 도시락(벤토)에서 따온 이름입니다.',p:'핵심 기능은 큰 카드로 나머지는 작은 카드로 구성한 벤토 그리드 섹션을 만들어 줘. 모바일에서는 한 열로 정렬해 줘.',
+ d:`<div class="mini bento" style="--nd:-2s"><i></i><i></i><i></i><i></i><i></i><i></i></div>`},
+{c:1,n:'사이드바 레이아웃',en:'Sidebar Layout',w:'왼쪽에 메뉴, 오른쪽이 작업 공간. 대시보드·관리자 페이지에 많고, 메뉴를 눌러도 오른쪽 내용만 바뀝니다.',p:'왼쪽에 고정된 사이드바 내비게이션, 오른쪽에 메인 콘텐츠가 있는 대시보드 레이아웃을 만들어 줘.',
+ d:`<div class="mini sbx" style="--nd:-.6s"><div class="sd"><div></div><div style="--d:1s"></div><div style="--d:2s"></div><div style="--d:3s"></div></div><div class="mn"><div class="pn"><i></i><i></i></div><div class="pn" style="--d:1s"><i></i><i></i></div><div class="pn" style="--d:2s"><i></i><i></i></div><div class="pn" style="--d:3s"><i></i><i></i></div></div></div>`},
+{c:1,n:'스티키 헤더',en:'Sticky Header',w:'스크롤을 내려도 화면 위에 달라붙어 있는 헤더. 한참 내려가도 메뉴와 주요 버튼에 바로 접근할 수 있습니다.',p:'상단 내비게이션을 스티키 헤더로 만들고 스크롤 중에도 보이게 해 줘.',
+ d:`<div class="mini stk" style="--nd:-1.2s"><div class="hd"><i></i><i></i><i></i></div><div class="bd"><div></div><div></div><div></div><div></div><div></div><div></div></div><span class="lab" style="right:8px;top:30px;z-index:5">고정!</span></div>`},
+{c:1,n:'스플릿 레이아웃',en:'Split Layout',w:'이미지와 글을 좌우로 나누는 구성. 제품·기능 설명에 자주 쓰고, 화면이 좁아지면 위아래로 쌓습니다.',p:'데스크톱에서는 이미지와 설명을 좌우 50대 50 스플릿 레이아웃으로 배치하고 모바일에서는 세로로 쌓아 줘.',
+ d:`<div class="mini spl" style="--nd:-.2s"><div class="sf"><div class="cells"><div class="im"></div><div class="tx"><div class="b w" style="width:80%"></div><div class="b"></div><div class="b" style="width:70%"></div></div></div></div></div>`},
+// ---- 컴포넌트 ----
+{c:2,n:'탭',en:'Tabs',w:'한 공간에서 내용을 바꿔 보여 줍니다. 페이지를 새로 열지 않고 이 구역 안의 내용만 바뀝니다.',p:'개요, 기능, 요금 정보를 탭 컴포넌트로 구성하고 선택된 탭을 강조해 줘.',
+ d:`<div class="mini tabs" style="--nd:-.5s"><div class="row"><span>개요</span><span>기능</span><span>요금</span><div class="ind"></div></div><div class="pn"><div class="box" style="background:#3b4a9a"></div><i></i><i style="width:70%"></i></div><div class="pn"><div class="box" style="background:#7c4d9a"></div><i></i><i style="width:60%"></i></div><div class="pn"><div class="box" style="background:#2f8a78"></div><i></i><i style="width:80%"></i></div></div>`},
+{c:2,n:'아코디언',en:'Accordion',w:'궁금한 항목만 펼쳐 보는 UI. 탭이 옆으로 바꾸는 거라면 아코디언은 아래로 펼칩니다. FAQ에 자주 씁니다.',p:'FAQ를 아코디언으로 만들어 줘. 질문을 누르면 답변이 펼쳐지고 다시 누르면 접히게 해 줘.',
+ d:`<div class="mini acc" style="--nd:-.8s"><div class="it"><div class="q">환불은 어떻게 하나요?<em>▸</em></div><div class="an"><i></i><i style="width:60%"></i></div></div><div class="it"><div class="q">배송은 얼마나 걸리나요?<em>▸</em></div><div class="an"><i></i><i style="width:60%"></i></div></div><div class="it"><div class="q">회원 탈퇴는 어디서?<em>▸</em></div><div class="an"><i></i><i style="width:60%"></i></div></div></div>`},
+{c:2,n:'모달 / 다이얼로그',en:'Modal · Dialog',w:'현재 화면 위에 별도 창을 띄워 중요한 확인·입력을 받습니다. 뒤를 어둡게 덮는 반투명 막이 오버레이(백드롭)입니다.',p:'삭제 버튼을 누르면 확인 모달을 띄우고 취소 버튼이나 ESC로 닫히게 해 줘.',
+ d:`<div class="mini mdl" style="--nd:-1.7s"><div class="pg"><div class="b w" style="width:50%"></div><div class="b"></div><div class="b" style="width:80%"></div><div class="b"></div></div><div class="ov"></div><div class="dlg"><b>정말 삭제할까요?</b><small>되돌릴 수 없습니다</small><div><span>취소</span><span>삭제</span></div></div><span class="lab" style="left:8px;bottom:8px;z-index:4">오버레이(백드롭)</span></div>`},
+{c:2,n:'드로어',en:'Drawer · Side Panel',w:'화면 옆에서 서랍처럼 나오는 패널. 설정·필터·상세 정보처럼 페이지를 벗어나지 않고 보조 작업을 할 때 좋습니다. 모달보다 덜 끊깁니다.',p:'설정 버튼을 누르면 오른쪽에서 드로어가 열리게 하고 바깥 영역 클릭과 ESC로 닫히게 해 줘.',
+ d:`<div class="mini drw" style="--nd:-1.7s"><div class="pg"><div class="b w" style="width:40%"></div><div class="b"></div><div class="b" style="width:70%"></div><div class="b"></div></div><div class="ov"></div><div class="pn"><b>설정</b><div class="tg"><i></i><u></u></div><div class="tg"><i></i><u></u></div><div class="tg"><i></i><u></u></div></div></div>`},
+{c:2,n:'드롭다운',en:'Dropdown',w:'버튼 하나 아래로 선택 목록이 펼쳐지는 UI. 옵션 선택이나 정렬 방식 변경 메뉴에서 볼 수 있습니다.',p:'정렬 버튼을 누르면 최신순, 인기순, 이름순을 고르는 드롭다운 메뉴가 나오게 해 줘.',
+ d:`<div class="mini dd" style="--nd:-1.8s"><div class="bt">정렬 ▾</div><div class="mn"><div class="hl"></div><div>최신순</div><div>인기순</div><div>이름순</div></div></div>`},
+{c:2,n:'툴팁',en:'Tooltip',w:'아이콘이나 버튼의 의미를 짧게 알려 주는 작은 안내창. 화면을 복잡하게 만들지 않고 필요한 사람에게만 정보를 보충합니다.',p:'설정 항목 옆에 도움말 아이콘을 넣고 마우스를 올리거나 키보드로 포커스하면 툴팁이 보이게 해 줘.',
+ d:`<div class="mini tip" style="--nd:-1.8s"><div class="row"><div class="q">?</div>알림 설정</div><div class="tp">푸시 알림을 켜고 끕니다</div><div class="cur"></div></div>`},
+{c:2,n:'토스트 / 스낵바',en:'Toast · Snackbar',w:'저장 후 화면 아래에 알림이 잠깐 떴다가 사라집니다. 계속 가리는 팝업보다 가볍게 결과를 알려 줍니다.',p:"저장이 성공하면 화면 하단에 '저장되었습니다' 토스트 알림을 3초간 보여 줘.",
+ d:`<div class="mini tst" style="--nd:-1.8s"><div class="bt">저장</div><div class="ts"><em>✓</em> 저장되었습니다</div></div>`},
+{c:2,n:'캐러셀',en:'Carousel',w:'여러 카드를 옆으로 넘겨 가며 보여 줍니다. 공간이 한정될 때 고객 후기나 이미지 갤러리에 자주 씁니다. (회전목마라는 뜻)',p:'고객 후기를 캐러셀로 만들어 줘. 좌우 버튼과 모바일 스와이프로 넘길 수 있게 해 줘.',
+ d:`<div class="mini car" style="--nd:-.4s"><div class="vp"><div class="tk"><i>후기 1</i><i>후기 2</i><i>후기 3</i></div></div><div class="ar" style="left:14px">‹</div><div class="ar" style="right:14px">›</div><div class="dt"><i></i><i></i><i></i></div></div>`},
+{c:2,n:'스켈레톤 로딩',en:'Skeleton Loading',w:'데이터를 불러오는 동안 빈 화면 대신 회색 윤곽을 먼저 보여 줍니다. "지금 불러오는 중"임을 자연스럽게 알립니다.',p:'데이터를 불러오는 동안 실제 카드 구조와 비슷한 스켈레톤 로딩 UI를 보여 줘.',
+ d:`<div class="mini skl" style="--nd:-1s"><div class="a"><div class="row"><div class="av sh"></div><div style="flex:1"><div class="ln sh"></div><div class="ln sh" style="width:70%"></div></div></div><div class="ln sh" style="margin-top:10px"></div><div class="ln sh" style="width:85%"></div><div class="ln sh" style="width:60%"></div></div><div class="r real"><div class="row"><div class="av"></div><div style="flex:1"><div class="ln"></div><div class="ln s" style="width:70%"></div></div></div><div class="ln" style="margin-top:10px"></div><div class="ln s" style="width:85%"></div><div class="ln s" style="width:60%"></div></div></div>`},
+// ---- 효과 ----
+{c:3,n:'호버 이펙트',en:'Hover Effect',w:'마우스를 올렸을 때 색이나 크기가 달라지는 효과. 사용자가 "여기는 누를 수 있구나" 하고 알아보게 돕습니다.',p:'카드에 호버 이펙트를 넣고 마우스를 올리면 그림자가 조금 진해지면서 카드가 살짝 위로 올라가게 해 줘.',
+ d:`<div class="mini hov" style="--nd:-1.8s"><div class="cd"><div class="ic"></div><div class="b w" style="width:60%;margin-bottom:6px"></div><div class="b"></div></div><div class="cur"></div></div>`},
+{c:3,n:'스크롤 리빌',en:'Scroll Reveal',w:'스크롤하다 콘텐츠가 보이는 순간 자연스럽게 등장시키는 효과. 랜딩 페이지의 기능 소개에서 흔합니다.',p:'각 기능 섹션이 화면에 들어오면 아래에서 살짝 올라오면서 나타나는 스크롤 리빌을 적용해 줘.',
+ d:`<div class="mini rev" style="--nd:-2.2s"><div class="pad"><div class="sec"></div><div class="sec"></div><div class="sec"></div></div><div class="sb"><i></i></div></div>`},
+{c:3,n:'스태거 애니메이션',en:'Stagger Animation',w:'여러 요소가 한꺼번에 움직이지 않고 시간차를 두고 나타나는 연출. 똑같은 카드도 순서가 생기면 리듬감이 느껴집니다.',p:'카드 목록이 처음 나타날 때 각 카드가 0.1초 간격으로 차례로 등장하는 스태거 애니메이션을 넣어 줘.',
+ d:`<div class="mini stg" style="--nd:-2.2s"><i></i><i></i><i></i><i></i><span class="lab" style="right:10px;bottom:8px;z-index:5">0.1초 간격 (과장 재생)</span></div>`},
+{c:3,n:'스무스 트랜지션',en:'Smooth Transition',w:'상태가 바뀔 때 뚝 끊기지 않고 자연스럽게 이어지게 합니다. 작은 차이지만 화면 완성도를 크게 높입니다. 보통 0.2초 안팎.',p:'버튼과 카드의 호버·선택 상태가 200ms 정도의 부드러운 트랜지션으로 바뀌게 해 줘.',
+ d:`<div class="mini trn" style="--nd:-.5s"><div class="col a"><i></i>transition 없음<br>(뚝)</div><div class="col b2"><i></i>0.2s ease<br>(부드럽게)</div></div>`},
+{c:3,n:'글래스모피즘',en:'Glassmorphism',w:'뒤쪽이 흐릿하게 비치는 유리질감 UI. 글자가 잘 안 읽힐 수 있으니 대비를 충분히 확보해야 합니다.',p:'카드에 반투명 배경과 백드롭 블러를 적용한 글래스모피즘 스타일을 쓰고 텍스트 대비는 유지해 줘.',
+ d:`<div class="mini gls" style="--nd:-1s"><div class="bl bl1"></div><div class="bl bl2"></div><div class="bl bl3"></div><div class="gc"><b>Glass Card</b><div class="b w" style="margin-bottom:5px;opacity:.8"></div><div class="b w" style="width:65%;opacity:.5"></div></div></div>`},
+{c:3,n:'패럴랙스 스크롤링',en:'Parallax Scrolling',w:'앞뒤 요소가 서로 다른 속도로 움직여 깊이감을 만듭니다. 너무 세면 어지러우니 약하게 쓰세요. 모션 감소 설정 사용자는 배려해야 합니다.',p:'히어로 섹션의 배경 장식에 약한 패럴랙스 스크롤링을 넣고, 모바일과 모션 감소 설정에서는 효과를 줄여 줘.',
+ d:`<div class="mini par" style="--nd:-.8s"><div class="l sun"></div><div class="l m1"></div><div class="l m2"></div><div class="l m3"></div><span class="lab" style="left:10px;top:8px;z-index:5">뒤는 느리게 · 앞은 빠르게</span></div>`},
+{c:3,n:'스크롤 스냅',en:'Scroll Snap',w:'스크롤을 놓으면 정해진 섹션에 화면이 딱 정렬되는 방식. 중간에 어정쩡하게 멈추지 않아 전체 화면 소개·슬라이드형 페이지에 좋습니다.',p:'전체 화면으로 구성한 소개 섹션에 스크롤 스냅을 적용해서 스크롤할 때 각 섹션에 자연스럽게 정렬되게 해 줘.',
+ d:`<div class="mini snp" style="--nd:-.3s"><div class="tk"><div>섹션 1</div><div>섹션 2</div><div>섹션 3</div></div><div class="dt"><i></i><i></i><i></i></div></div>`},
+{c:3,n:'마이크로 인터랙션',en:'Micro-interaction',w:'좋아요 하트가 톡 튀고, 저장하면 체크로 바뀌는 작은 반응. 클릭·저장·선택 같은 행동에 바로 돌아오는 시각 피드백입니다.',p:'저장 버튼을 누르면 로딩 상태를 거쳐 체크 아이콘으로 바뀌는 짧은 마이크로 인터랙션을 만들어 줘.',
+ d:`<div class="mini mic" style="--nd:-.3s"><div class="bt"><span class="s1">저장</span><span class="s2"></span><span class="s3">✓</span></div><div class="hrt">♥</div></div>`}
+];
+const CAT={1:'레이아웃',2:'컴포넌트',3:'효과·모션'};
+const grid=document.getElementById('grid');
+grid.innerHTML=D.map((x,i)=>`<article class="card" data-c="${x.c}" tabindex="0">
+ <div class="stage">${x.d}</div>
+ <div class="body"><div class="meta"><span class="no">${String(i+1).padStart(2,'0')}</span><span class="tag ${x.c==2?'c2':x.c==3?'c3':''}">${CAT[x.c]}</span></div>
+ <div class="name">${x.n}<small>${x.en}</small></div><p class="when">${x.w}</p>
+ <div class="prompt"><q>${x.p}</q><button type="button">복사</button></div></div></article>`).join('');
+
+grid.querySelectorAll('.card').forEach(c=>{
+  c.addEventListener('mouseenter',()=>c.classList.add('on'));
+  c.addEventListener('mouseleave',()=>c.classList.remove('on'));
+  c.addEventListener('focus',()=>c.classList.add('on'));
+  c.addEventListener('blur',()=>c.classList.remove('on'));
+  c.querySelector('.stage').addEventListener('click',()=>c.classList.toggle('on')); // 터치용
+  const b=c.querySelector('.prompt button');
+  b.addEventListener('click',e=>{e.stopPropagation();navigator.clipboard.writeText(c.querySelector('.prompt q').textContent).then(()=>{b.textContent='복사됨';b.classList.add('ok');setTimeout(()=>{b.textContent='복사';b.classList.remove('ok')},1200)}).catch(()=>{})});
+});
+document.querySelectorAll('.chip[data-f]').forEach(ch=>ch.onclick=()=>{
+  document.querySelectorAll('.chip[data-f]').forEach(x=>x.classList.remove('act'));ch.classList.add('act');
+  grid.querySelectorAll('.card').forEach(c=>c.style.display=(ch.dataset.f==='all'||c.dataset.c===ch.dataset.f)?'':'none');
+});
+const pa=document.getElementById('playall');
+pa.onclick=()=>{const on=document.body.classList.toggle('all');pa.textContent=on?'❚❚ 전체 정지':'▶ 전체 재생';pa.classList.toggle('act',on)};
+</script>
+</body>
+</html>
